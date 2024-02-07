@@ -42,7 +42,7 @@ namespace :import_data do
         lobbyist_city: row[7],
         lobbyist_state: row[8],
         lobbyist_zip: row[9],
-        primary_lobbyist_id: row[10].to_i,
+        id: row[10].to_i,
         lobbyist_phone: row[11],
         fiscal_years_registered: row[12],
         lobbyist_type: row[13],
