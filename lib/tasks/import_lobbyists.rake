@@ -57,4 +57,59 @@ namespace :import_data do
     end
     puts "","","   DONE: Imported #{ActiveSupport::NumberHelper.number_to_delimited(lobbyist_count)} lobbyists.",""
   end
+
+  desc "load Client data from a .txt file"
+  task clients: :environment do
+    # Not as Fancy Loading Header
+    puts "=" * 79
+    puts "|" + " CLIENTS ".center(77) + "|"
+    puts "=".center(79, "="),""
+
+    # Destroy previous clients
+    puts "* Destroying previous client data..."
+    Client.destroy_all
+
+    # Open text file of clients
+    puts "* Reading through lobbyist seed file ..."
+    clients_filepath = "db/data/prof_clients_current_fiscal_year.txt"
+    client_seeds = File.readlines(clients_filepath)
+
+    # First line of the file is the header, which looks like this:
+    # lobbyistName	lobbyistLastName	lobbyistFirstName	lobbyistFirmName	lobbyistZip	primaryLobbyistID	annualLobbyistRegistrationID	clientName	clientAdress	clientCity	clientState	clientZip	clientPhone	industryTradeType	businessType	clientBeginDate	clientEndDate	clientStatus	ceoNames	fiscalYear	runDate
+    
+    # Iterate through each line in the file and create a Lobbyist object
+    puts "* Creating client models...", ""
+
+    # Fancy variables for the loading animation
+    total_clients = client_seeds.count - 1
+    client_count = 0
+
+    client_seeds[1..].each do |row|
+      row = row.split("\t")
+
+      Client.create(
+        name: row[7],
+        address: row[8],
+        city: row[9],
+        state: row[10],
+        zip: row[11],
+        phone: row[12],
+        industry_trade_type: row[13],
+        business_type: row[14],
+        begin_date: row[15],
+        end_date: row[16],
+        status: row[17],
+        ceo_names: row[18],
+        fiscal_year: row[19],
+        annual_lobbyist_registration_id: row[6],
+        lobbyist_id: row[5]
+      )
+
+      client_count += 1
+      percent_done = (client_count.to_f / total_clients)
+      progress_bar = "=" * (percent_done * 59).round
+      printf("\rLOADING: [%-59s] (%5.1f%%)", progress_bar, percent_done * 100)
+    end
+    puts "","","   DONE: Imported #{ActiveSupport::NumberHelper.number_to_delimited(client_count)} clients.",""
+  end
 end
