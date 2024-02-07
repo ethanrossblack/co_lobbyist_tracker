@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_02_07_224040) do
+ActiveRecord::Schema[7.0].define(version: 2024_02_07_225951) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -29,11 +29,13 @@ ActiveRecord::Schema[7.0].define(version: 2024_02_07_224040) do
     t.string "ceo_names"
     t.string "fiscal_year"
     t.bigint "annual_lobbyist_registration_id"
+    t.bigint "lobbyist_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["lobbyist_id"], name: "index_clients_on_lobbyist_id"
   end
 
-  create_table "lobbyists", id: false, force: :cascade do |t|
+  create_table "lobbyists", force: :cascade do |t|
     t.string "lobbyist_name"
     t.string "lobbyist_last_name"
     t.string "lobbyist_first_name"
@@ -53,4 +55,5 @@ ActiveRecord::Schema[7.0].define(version: 2024_02_07_224040) do
     t.datetime "updated_at", null: false
   end
 
+  add_foreign_key "clients", "lobbyists"
 end

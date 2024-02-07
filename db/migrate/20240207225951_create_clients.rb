@@ -15,7 +15,8 @@ class CreateClients < ActiveRecord::Migration[7.0]
       t.string :ceo_names
       t.string :fiscal_year
       t.bigint :annual_lobbyist_registration_id
-      
+      t.references :lobbyist, null: false, foreign_key: true
+
       t.timestamps
     end
   end
