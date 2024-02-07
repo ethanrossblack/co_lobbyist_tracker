@@ -65,3 +65,31 @@ What do I do if a client hires multiple lobbyists? How might I consolidate that?
 | `fiscalYear` | string| | | |
 
 rails g model Client name:string address:string city:string state:string zip:string phone:string industry_trade_type:string business_type:string begin_date:date end_date:date status:string ceo_names:string fiscal_year:string annual_lobbyist_registration_id:bigint lobbyist:references
+
+
+0. lobbyistName
+1. lobbyistLastName
+1. lobbyistFirstName
+1. lobbyistFirmName
+1. lobbyistZip
+1. primaryLobbyistID
+1. annualLobbyistRegistrationID
+1. clientName
+1. clientAdress
+1. clientCity
+1. clientState
+1. clientZip
+1. clientPhone
+1. industryTradeType
+1. businessType
+1. clientBeginDate
+1. clientEndDate
+1. clientStatus
+1. ceoNames
+1. fiscalYear
+1. runDate
+
+
+
+Colorado Advocates, Inc.
+Colorado Advocates, Inc.
