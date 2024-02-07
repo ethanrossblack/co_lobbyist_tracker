@@ -10,12 +10,30 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_02_06_234206) do
+ActiveRecord::Schema[7.0].define(version: 2024_02_07_224040) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
+  create_table "clients", force: :cascade do |t|
+    t.string "name"
+    t.string "address"
+    t.string "city"
+    t.string "state"
+    t.string "zip"
+    t.string "phone"
+    t.string "industry_trade_type"
+    t.string "business_type"
+    t.date "begin_date"
+    t.date "end_date"
+    t.string "status"
+    t.string "ceo_names"
+    t.string "fiscal_year"
+    t.bigint "annual_lobbyist_registration_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "lobbyists", id: false, force: :cascade do |t|
-    t.bigint "primary_lobbyist_id"
     t.string "lobbyist_name"
     t.string "lobbyist_last_name"
     t.string "lobbyist_first_name"
