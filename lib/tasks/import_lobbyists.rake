@@ -68,6 +68,7 @@ namespace :import_data do
     # Destroy previous clients
     puts "* Destroying previous client data..."
     Client.destroy_all
+    ActiveRecord::Base.connection.reset_pk_sequence!('clients')
 
     # Open text file of clients
     puts "* Reading through lobbyist seed file ..."
@@ -83,33 +84,108 @@ namespace :import_data do
     # Fancy variables for the loading animation
     total_clients = client_seeds.count - 1
     client_count = 0
-
+    error_count = 0
+    
     client_seeds[1..].each do |row|
       row = row.split("\t")
 
-      Client.create(
-        name: row[7],
-        address: row[8],
-        city: row[9],
-        state: row[10],
-        zip: row[11],
-        phone: row[12],
-        industry_trade_type: row[13],
-        business_type: row[14],
-        begin_date: row[15],
-        end_date: row[16],
-        status: row[17],
-        ceo_names: row[18],
-        fiscal_year: row[19],
-        annual_lobbyist_registration_id: row[6],
-        lobbyist_id: row[5]
-      )
+      begin
+        Client.create!(
+          name: row[7],
+          address: row[8],
+          city: row[9],
+          state: row[10],
+          zip: row[11],
+          phone: row[12],
+          industry_trade_type: row[13],
+          business_type: row[14],
+          begin_date: Date.strptime(row[15], '%m/%d/%Y'),
+          end_date:  row[16] != "" ? Date.strptime(row[16], '%m/%d/%Y') : nil,
+          status: row[17].strip,
+          ceo_names: row[18],
+          fiscal_year: row[19],
+          annual_lobbyist_registration_id: row[6],
+          lobbyist_id: row[5]
+        )
+      rescue
+        error_count += 1
+        puts "\n","ERROR IMPORTING #{row[7]}\nLOBBYIST: #{row[0]}\nSTART DATE: #{row[15]}\nLOBBYIST ID: #{row[5]}", ""
+      end
 
       client_count += 1
       percent_done = (client_count.to_f / total_clients)
       progress_bar = "=" * (percent_done * 59).round
       printf("\rLOADING: [%-59s] (%5.1f%%)", progress_bar, percent_done * 100)
     end
-    puts "","","   DONE: Imported #{ActiveSupport::NumberHelper.number_to_delimited(client_count)} clients.",""
+    puts "","","   DONE: Imported #{ActiveSupport::NumberHelper.number_to_delimited(client_count)} clients. (#{error_count} errors)",""
+  end
+
+  desc "load Income data from a .txt file"
+  task incomes: :environment do
+    # Not as Fancy Loading Header
+    puts "=" * 79
+    puts "|" + " INCOMES ".center(77) + "|"
+    puts "=".center(79, "="),""
+
+    # Destroy previous 
+    puts "* Destroying previous income data..."
+    Income.destroy_all
+    ActiveRecord::Base.connection.reset_pk_sequence!('incomes')
+
+
+    # Open text file of incomes
+    puts "* Reading through lobbyist seed file ..."
+    incomes_filepath = "db/data/prof_income_current_fiscal_year.txt"
+    income_seeds = File.readlines(incomes_filepath)
+
+    # First line of the file is the header, which looks like this:
+    # lobbyistName	lobbyistLastName	lobbyistFirstName	lobbystFirmName	lobbyistZip	primaryLobbyistID	annualLobbyistRegistrationId	clientName	clientZip	businessType	industryTradeType	incomeAmount	dateIncomeReceived	reportMonth	reportDueDate	fiscalYear	runDate
+    
+    # Iterate through each line in the file and create a Lobbyist object
+    puts "* Creating income models...", ""
+
+    # Fancy variables for the loading animation
+    total_incomes = income_seeds.count - 1
+    income_count = 0
+
+    income_seeds[1..].each do |row|
+      row = row.split("\t")
+
+      lobbyist = Lobbyist.find(row[5]) # primary ID
+      client_name = row[7]
+      possible_client = lobbyist.clients.where(name: client_name)
+
+      amount = row[11].gsub(",","").to_i
+      
+      if possible_client.length == 0 || possible_client.length >= 3
+        require "pry"; binding.pry
+      else
+        Income.create!(
+          annual_lobbyist_registration_id: row[6],
+          client_name: row[7],
+          client_zip: row[8],
+          business_type: row[9],
+          industry_trade_type: row[10],
+          amount: amount,
+          date_received: Date.strptime(row[12], '%m/%d/%Y'),
+          report_month: row[13],
+          report_due_date: Date.strptime(row[14], '%m/%d/%Y'),
+          fiscal_year: row[15],
+          lobbyist_id: row[5],
+          client_id: possible_client.first.id
+        )
+      end
+      
+      income_count += 1
+      percent_done = (income_count.to_f / total_incomes)
+      progress_bar = "=" * (percent_done * 59).round
+      printf("\rLOADING: [%-59s] (%5.1f%%)", progress_bar, percent_done * 100)
+    end
+    puts "","","   DONE: Imported #{ActiveSupport::NumberHelper.number_to_delimited(income_count)} incomes.",""
+  end
+
+  desc "import all lobbying data"
+  task all: [:lobbyists, :clients, :incomes] do
+    puts "","ALL LOBBYING DATA IMPORTED"
   end
 end
