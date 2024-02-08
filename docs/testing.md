@@ -2,24 +2,24 @@
 
 Import from the SoS website on income for current fiscal year: (https://www.coloradosos.gov/pubs/lobby/downloadFiles/prof_income_current_fiscal_year.txt)
 
-### Headers
-* lobbyistName
-* lobbyistLastName
-* lobbyistFirstName
-* lobbystFirmName
-* lobbyistZip
-* primaryLobbyistID
-* annualLobbyistRegistrationId
-* clientName
-* clientZip
-* businessType
-* industryTradeType
-* incomeAmount
-* dateIncomeReceived
-* reportMonth
-* reportDueDate
-* fiscalYear
-* runDate
+### Income Raw Headers
+0. lobbyistName
+1. lobbyistLastName
+1. lobbyistFirstName
+1. lobbystFirmName
+1. lobbyistZip
+1. primaryLobbyistID
+1. annualLobbyistRegistrationId
+1. clientName
+1. clientZip
+1. businessType
+1. industryTradeType
+1. incomeAmount
+1. dateIncomeReceived
+1. reportMonth
+1. reportDueDate
+1. fiscalYear
+1. runDate
 
 Necessary ones:
 
@@ -36,6 +36,8 @@ Necessary ones:
 * fiscalYear
 * runDate
 
+
+rails g model Income annual_lobbyist_registration_id:bigint client_name:string client_zip:string business_type:string industry_trade_type:string amount:integer date_received:date report_month:string report_due_date:date fiscal_year:date lobbyist:references client:references 
 
 Client Columns
 
@@ -93,3 +95,6 @@ rails g model Client name:string address:string city:string state:string zip:str
 
 Colorado Advocates, Inc.
 Colorado Advocates, Inc.
+
+
+I
