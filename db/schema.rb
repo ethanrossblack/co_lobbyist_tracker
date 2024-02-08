@@ -10,12 +10,51 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_02_06_234206) do
+ActiveRecord::Schema[7.0].define(version: 2024_02_07_235952) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "lobbyists", id: false, force: :cascade do |t|
-    t.bigint "primary_lobbyist_id"
+  create_table "clients", force: :cascade do |t|
+    t.string "name"
+    t.string "address"
+    t.string "city"
+    t.string "state"
+    t.string "zip"
+    t.string "phone"
+    t.string "industry_trade_type"
+    t.string "business_type"
+    t.date "begin_date"
+    t.date "end_date"
+    t.string "status"
+    t.string "ceo_names"
+    t.string "fiscal_year"
+    t.bigint "annual_lobbyist_registration_id"
+    t.bigint "lobbyist_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["lobbyist_id"], name: "index_clients_on_lobbyist_id"
+  end
+
+  create_table "incomes", force: :cascade do |t|
+    t.bigint "annual_lobbyist_registration_id"
+    t.string "client_name"
+    t.string "client_zip"
+    t.string "business_type"
+    t.string "industry_trade_type"
+    t.integer "amount"
+    t.date "date_received"
+    t.string "report_month"
+    t.date "report_due_date"
+    t.string "fiscal_year"
+    t.bigint "lobbyist_id", null: false
+    t.bigint "client_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["client_id"], name: "index_incomes_on_client_id"
+    t.index ["lobbyist_id"], name: "index_incomes_on_lobbyist_id"
+  end
+
+  create_table "lobbyists", force: :cascade do |t|
     t.string "lobbyist_name"
     t.string "lobbyist_last_name"
     t.string "lobbyist_first_name"
@@ -35,4 +74,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_02_06_234206) do
     t.datetime "updated_at", null: false
   end
 
+  add_foreign_key "clients", "lobbyists"
+  add_foreign_key "incomes", "clients"
+  add_foreign_key "incomes", "lobbyists"
 end

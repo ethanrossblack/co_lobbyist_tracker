@@ -1,7 +1,6 @@
 class CreateLobbyists < ActiveRecord::Migration[7.0]
   def change
-    create_table :lobbyists, id: false, primary_key: :primary_lobbyist_id do |t|
-      t.bigint :primary_lobbyist_id, unique: true
+    create_table :lobbyists do |t|
       t.string :lobbyist_name
       t.string :lobbyist_last_name
       t.string :lobbyist_first_name
