@@ -10,7 +10,7 @@ class CreateIncomes < ActiveRecord::Migration[7.0]
       t.date :date_received
       t.string :report_month
       t.date :report_due_date
-      t.date :fiscal_year
+      t.string :fiscal_year
       t.references :lobbyist, null: false, foreign_key: true
       t.references :client, null: false, foreign_key: true
 

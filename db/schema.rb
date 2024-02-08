@@ -45,7 +45,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_02_07_235952) do
     t.date "date_received"
     t.string "report_month"
     t.date "report_due_date"
-    t.date "fiscal_year"
+    t.string "fiscal_year"
     t.bigint "lobbyist_id", null: false
     t.bigint "client_id", null: false
     t.datetime "created_at", null: false
