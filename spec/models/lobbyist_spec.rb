@@ -1,8 +1,8 @@
 require 'rails_helper'
 
 RSpec.describe Lobbyist, type: :model do
-  describe 'validations' do
-    it { should validate_presence_of(:primary_lobbyist_id) }
-    it { should validate_uniqueness_of(:primary_lobbyist_id) }
+  describe 'relationships' do
+    it { should have_many(:clients) }
+    it { should have_many(:incomes) }
   end
 end
