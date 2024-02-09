@@ -24,5 +24,18 @@ RSpec.describe Lobbyist, type: :model do
         expect(@lobbyist_2.total_income).to eq(2000)
       end
     end
+
+    describe '#highest_paying_client' do
+      it "returns a lobbyist's highest paying client and the total paid amount to the lobbyist from that client" do
+        expect(@lobbyist_1.highest_paying_client).to eq(@client_1)
+        expect(@lobbyist_1.highest_paying_client.total_paid).to eq(3000)
+        
+        client_2 = create(:client, lobbyist: @lobbyist_1)
+        big_income = create(:income, amount:10000000, lobbyist: @lobbyist_1, client: client_2)
+
+        expect(@lobbyist_1.highest_paying_client).to eq(client_2)
+        expect(@lobbyist_1.highest_paying_client.total_paid).to eq(10000000)
+      end
+    end
   end
 end
