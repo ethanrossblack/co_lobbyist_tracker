@@ -1,0 +1,9 @@
+<%= link_to sanitize("&larr; Back Home"), "/" %>
+
+<h1>Lobbyists</h1>
+
+<div id="lobbyists">
+  <% @lobbyists.each do |lobbyist| %>
+    <%= render partial: "lobbyist_simple", locals: { lobbyist: lobbyist } %>
+  <% end %>
+</div>

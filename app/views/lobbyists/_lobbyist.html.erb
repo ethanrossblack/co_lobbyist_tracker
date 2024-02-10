@@ -1,0 +1,53 @@
+<div id="<%= dom_id lobbyist %>">
+  <h1><%= "#{lobbyist.first_name} #{lobbyist.last_name}#{lobbyist.suffix.empty? ? "" : " " + lobbyist.suffix }".titleize %></h1>
+  <p><b>Primary Lobbyist ID: </b><%= lobbyist.id %></p>
+  <p><b>Total Income:</b> <%= number_to_currency(lobbyist.total_income) %></p>
+  <table>
+    <tr>
+      <td><b>FIRM NAME</b></td>
+      <td><%= lobbyist.firm_name.titleize %></td>
+    </tr>
+    <tr>
+      <td><b>ADDRESS</b></td>
+      <td><%= "#{lobbyist.address.titleize}\n\n#{lobbyist.city.titleize}, #{lobbyist.state} #{lobbyist.zip}" %></td>
+    </tr>
+    <tr>
+      <td><b>PHONE #</b></td>
+      <td><%= lobbyist.phone %></td>
+    </tr>
+    <tr>
+      <td><b>TYPE</b></td>
+      <td><%= lobbyist.lobbyist_type %></td>
+    </tr>
+    <tr>
+      <td><b>DESIGNATION</b></td>
+      <td><%= lobbyist.designation %></td>
+    </tr>
+    <tr>
+      <td><b>STATUS</b></td>
+      <td><%= lobbyist.status %></td>
+    </tr>
+  </table>
+
+  <h2>Clients</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>Client</td>
+        <th>Payment</td>
+        <th>Month</td>
+        <th>Fiscal Year</td>
+      </tr>
+    </thead>
+    <tbody>
+      <% lobbyist.clients_by_income_amount.each do |client| %>
+        <tr>
+          <td><%= client.name.titleize %></td>
+          <td><%= number_to_currency(client.total_paid) %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
+
+
