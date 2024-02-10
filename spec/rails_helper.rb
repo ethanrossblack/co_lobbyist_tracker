@@ -60,6 +60,12 @@ RSpec.configure do |config|
   config.filter_rails_from_backtrace!
   # arbitrary gems may also be filtered via:
   # config.filter_gems_from_backtrace("gem name")
+
+  # Config FactoryBot Methods
+  config.include FactoryBot::Syntax::Methods
+
+  # Have documentation formatting by default
+  config.formatter = :documentation
 end
 
 # Configures Shoulda-Matchers to use RSpec as the test framework and full matcher libraries for Rails

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_02_07_235952) do
+ActiveRecord::Schema[7.0].define(version: 2024_02_10_000943) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -55,20 +55,20 @@ ActiveRecord::Schema[7.0].define(version: 2024_02_07_235952) do
   end
 
   create_table "lobbyists", force: :cascade do |t|
-    t.string "lobbyist_name"
-    t.string "lobbyist_last_name"
-    t.string "lobbyist_first_name"
-    t.string "lobbyist_middle_name"
-    t.string "lobbyist_suffix"
-    t.string "lobbyist_firm_name"
-    t.string "lobbyist_address"
-    t.string "lobbyist_city"
-    t.string "lobbyist_state"
-    t.string "lobbyist_zip"
-    t.string "lobbyist_phone"
+    t.string "name"
+    t.string "last_name"
+    t.string "first_name"
+    t.string "middle_name"
+    t.string "suffix"
+    t.string "firm_name"
+    t.string "address"
+    t.string "city"
+    t.string "state"
+    t.string "zip"
+    t.string "phone"
     t.string "fiscal_years_registered"
     t.string "lobbyist_type"
-    t.string "lobbyist_designation"
+    t.string "designation"
     t.string "status"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
