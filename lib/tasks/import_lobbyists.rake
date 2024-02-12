@@ -16,7 +16,7 @@ namespace :import_data do
 
     # Open text file of lobbyists
     puts "* Reading through lobbyist seed file ..."
-    lobbyist_filepath = "db/data/prof_lobbyist_directory.txt"
+    lobbyist_filepath = "db/data/prof_lobbyist_directory_2_11.txt"
     lobbyist_seeds = File.readlines(lobbyist_filepath)
     # First line of the file is the header, which looks like this:
     # lobbyistName	lobbystLastName	lobbyistFirstName	lobbyistMiddleName	lobbyistSuffix	lobbyistFirmName	lobbyistAddress	lobbyistCity	lobbyistState	lobbyistZip	primaryLobbyistID	lobbyistPhone	fiscalYearsRegistered	lobbystType	lobbyistDesignation	status	runDate
@@ -32,21 +32,21 @@ namespace :import_data do
       row = row.split("\t")
 
       Lobbyist.create(
-        lobbyist_name: row[0],
-        lobbyist_last_name: row[1],
-        lobbyist_first_name: row[2],
-        lobbyist_middle_name: row[3],
-        lobbyist_suffix: row[4],
-        lobbyist_firm_name: row[5],
-        lobbyist_address: row[6],
-        lobbyist_city: row[7],
-        lobbyist_state: row[8],
-        lobbyist_zip: row[9],
+        name: row[0],
+        last_name: row[1],
+        first_name: row[2],
+        middle_name: row[3],
+        suffix: row[4],
+        firm_name: row[5],
+        address: row[6],
+        city: row[7],
+        state: row[8],
+        zip: row[9],
         id: row[10].to_i,
-        lobbyist_phone: row[11],
+        phone: row[11],
         fiscal_years_registered: row[12],
         lobbyist_type: row[13],
-        lobbyist_designation: row[14].strip,
+        designation: row[14].strip,
         status: row[15].strip
       )
 
@@ -72,7 +72,7 @@ namespace :import_data do
 
     # Open text file of clients
     puts "* Reading through lobbyist seed file ..."
-    clients_filepath = "db/data/prof_clients_current_fiscal_year.txt"
+    clients_filepath = "db/data/prof_clients_current_fiscal_year_2_11.txt"
     client_seeds = File.readlines(clients_filepath)
 
     # First line of the file is the header, which looks like this:
@@ -135,7 +135,7 @@ namespace :import_data do
 
     # Open text file of incomes
     puts "* Reading through lobbyist seed file ..."
-    incomes_filepath = "db/data/prof_income_current_fiscal_year.txt"
+    incomes_filepath = "db/data/prof_income_current_fiscal_year_2_11.txt"
     income_seeds = File.readlines(incomes_filepath)
 
     # First line of the file is the header, which looks like this:
