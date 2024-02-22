@@ -30,20 +30,24 @@
   </table>
 
   <h2>Clients</h2>
-  <table>
+  <table border="1">
     <thead>
       <tr>
         <th>Client</td>
         <th>Payment</td>
-        <th>Month</td>
-        <th>Fiscal Year</td>
+        <th>Start Date</td>
+        <th>Client Status</th>
       </tr>
     </thead>
     <tbody>
       <% lobbyist.clients_by_income_amount.each do |client| %>
         <tr>
-          <td><%= client.name.titleize %></td>
-          <td><%= number_to_currency(client.total_paid) %></td>
+          <td><%= client.name.titleize.gsub(/\((.*?)\)/) { |match| match.upcase } %></td>
+          <td style="text-align: right;">
+            <%= number_to_currency(client.total_paid.nil? ? 0 : client.total_paid) %>
+          </td>
+          <td><%= client.begin_date.to_fs(:db) %></td>
+          <td><%= client.status %></td>
         </tr>
       <% end %>
     </tbody>
