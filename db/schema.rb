@@ -10,9 +10,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_02_10_000943) do
+ActiveRecord::Schema[7.0].define(version: 2024_02_11_215305) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "bills", force: :cascade do |t|
+    t.string "bill_num"
+    t.string "title"
+    t.string "fiscal_year"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "clients", force: :cascade do |t|
     t.string "name"
@@ -74,7 +82,24 @@ ActiveRecord::Schema[7.0].define(version: 2024_02_10_000943) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "positions", force: :cascade do |t|
+    t.string "report_month"
+    t.string "fiscal_year"
+    t.string "position"
+    t.bigint "bill_id", null: false
+    t.bigint "lobbyist_id", null: false
+    t.bigint "client_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["bill_id"], name: "index_positions_on_bill_id"
+    t.index ["client_id"], name: "index_positions_on_client_id"
+    t.index ["lobbyist_id"], name: "index_positions_on_lobbyist_id"
+  end
+
   add_foreign_key "clients", "lobbyists"
   add_foreign_key "incomes", "clients"
   add_foreign_key "incomes", "lobbyists"
+  add_foreign_key "positions", "bills"
+  add_foreign_key "positions", "clients"
+  add_foreign_key "positions", "lobbyists"
 end

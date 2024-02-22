@@ -11,10 +11,9 @@ class Lobbyist < ApplicationRecord
   end
 
   def clients_by_income_amount
-    clients.joins(:incomes)
-          .where("incomes.lobbyist_id = '#{id}'")
+    clients.left_outer_joins(:incomes)
+          .select('clients.*, SUM(incomes.amount) as total_paid')
           .group('clients.id')
-          .select('clients.*, SUM(incomes.amount) AS total_paid')
-          .order('total_paid DESC')
+          .order(Arel.sql('total_paid DESC NULLS LAST, clients.name'))
   end
 end
