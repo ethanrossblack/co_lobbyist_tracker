@@ -1,27 +1,25 @@
 
 # README
-This README would normally document whatever steps are necessary to get the
-application up and running.
 
-Things you may want to cover:
 
-* Ruby version
+* Ruby 3.2.2
+* Rails 7.0.8
 
-* System dependencies
+To create the database, run 
 
-* Configuration
+```
+rails db:{create,migrate}
+```
 
-* Database creation
+To import test data, run
 
-* Database initialization
+```
+rails import_data:all
+```
 
-* How to run the test suite
+Importing all the data takes a little while, but you should see progress in your terminal.
 
-* Services (job queues, cache servers, search engines, etc.)
 
-* Deployment instructions
-
-* ...
 
 ## Model Schema
 
