@@ -5,4 +5,5 @@ Rails.application.routes.draw do
   # root "articles#index"
   get "/", to: "welcome#index"
   resources :lobbyists, only: [:index, :show]
+  resources :bills, only: [:index, :show]
 end
