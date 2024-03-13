@@ -185,7 +185,7 @@ namespace :import_data do
   end
 
   desc "import all lobbying data"
-  task all: [:lobbyists, :clients, :incomes] do
+  task all: [:lobbyists, :clients, :incomes, :bill_positions] do
     puts "","ALL LOBBYING DATA IMPORTED"
   end
 end
