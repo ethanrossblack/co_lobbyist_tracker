@@ -1,7 +1,7 @@
 class Client < ApplicationRecord
   belongs_to :lobbyist
   has_many :incomes, dependent: :destroy
-  has_many :positions
+  has_many :positions, dependent: :destroy
   has_many :bills, through: :positions
 
   def total_income
