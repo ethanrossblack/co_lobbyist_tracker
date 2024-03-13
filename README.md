@@ -25,30 +25,24 @@ Things you may want to cover:
 
 ## Model Schema
 
-### `lobbyist`
+* [bill](#bill)
+* [client](#client)
+* [income](#income)
+* [lobbyist](#lobbyist)
+* [position](#position)
 
-A Registered lobbyist in the state of Colorado. Data comes from the SoS office.
+### `bill`
+
+A piece of legislation from the Colorado legislature.
 
 | Attribute | Datatype | Notes |
 |---|---|---|
-| `id` | _bigint_ | The `primaryLobbyistId` assigned by the CO SoS. |
-| `name` | _string_ | |
-| `last_name` | _string_ | |
-| `first_name` | _string_ | |
-| `middle_name` | _string_ | |
-| `suffix` | _string_ | |
-| `firm_name` | _string_ | |
-| `address` | _string_ | |
-| `city` | _string_ | |
-| `state` | _string_ | |
-| `zip` | _string_ | |
-| `phone` | _string_ | |
-| `fiscal_years_registered` | _string_ | |
-| `lobbyist_type` | _string_ | |
-| `designation` | _string_ | |
-| `status` | _string_ | |
-| `created_at` | _datetime_ | |
-| `updated_at` | _datetime_ | |
+| `id` | _bigint_ | |
+| `bill_num` | _string_ | A unique bill number. _HB24-1001_, for example. |
+| `title` | _string_ | Short bill title. |
+| `fiscal_year` | _string_ | Fiscal year of the bill, IE 2024-2025. |
+| `created_at`| _datetime_ | |
+| `updated_at`| _datetime_ | |
 
 ### `client`
 
@@ -94,5 +88,46 @@ A payment from a [`client`](#client) to a [`lobbyist`](#lobbyist).
 | `fiscal_year` | _string_ | |
 | `lobbyist_id` | _bigint_ | Reference to a [`lobbyist`](#lobbyist) |
 | `client_id` | _bigint_ | Reference to a [`client`](#client) |
+| `created_at` | _datetime_ | |
+| `updated_at`| _datetime_ | |
+
+### `lobbyist`
+
+A Registered lobbyist in the state of Colorado. Data comes from the SoS office.
+
+| Attribute | Datatype | Notes |
+|---|---|---|
+| `id` | _bigint_ | The `primaryLobbyistId` assigned by the CO SoS. |
+| `name` | _string_ | |
+| `last_name` | _string_ | |
+| `first_name` | _string_ | |
+| `middle_name` | _string_ | |
+| `suffix` | _string_ | |
+| `firm_name` | _string_ | |
+| `address` | _string_ | |
+| `city` | _string_ | |
+| `state` | _string_ | |
+| `zip` | _string_ | |
+| `phone` | _string_ | |
+| `fiscal_years_registered` | _string_ | |
+| `lobbyist_type` | _string_ | |
+| `designation` | _string_ | |
+| `status` | _string_ | |
+| `created_at` | _datetime_ | |
+| `updated_at` | _datetime_ | |
+
+### `position`
+
+The position of a client on a particular piece of legislation. Reported monthly. Specific to a client and lobbyist.
+
+| Attribute | Datatype | Notes |
+|---|---|---|
+| `id` | _bigint_ | |
+| `report_month` | _string_ | |
+| `fiscal_year` | _string_ | |
+| `position` | _position_ | Support, Oppose, Watching, Amending, etc.  |
+| `bill_id` | _bigint_ | Reference to a [`bill`](#bill) |
+| `client_id` | _bigint_ | Reference to a [`client`](#client) |
+| `lobbyist_id` | _bigint_ | Reference to a [`lobbyist`](#lobbyist) |
 | `created_at` | _datetime_ | |
 | `updated_at`| _datetime_ | |
