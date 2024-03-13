@@ -46,7 +46,7 @@
           <td style="text-align: right;">
             <%= number_to_currency(client.total_paid.nil? ? 0 : client.total_paid) %>
           </td>
-          <td><%= client.begin_date.to_fs(:db) %></td>
+          <td><%= client.begin_date.strftime("%b %Y") %></td>
           <td><%= client.status %></td>
         </tr>
       <% end %>
