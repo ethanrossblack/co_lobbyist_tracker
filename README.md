@@ -21,7 +21,25 @@ rails import_data:all
 
 Importing all the data takes a little while, but you should see progress in your terminal.
 
+## Listing Relationships
 
+A `client` hires a `lobbyist`\
+A `lobbyist` can have many `clients`\
+A `client` can hire many `lobbyists`
+
+A `lobbyist` receives monthly `income` from a `client`
+
+A `position` belongs to one `client` and one `lobbyist`\
+A `position` corresponds with one `bill` (or issue)
+
+## The Problem
+
+The main problem that I'm trying to solve is of how to best show the relationships between
+- Lobbyists
+- Clients
+- Bill
+- Income
+- Position
 
 ## Model Schema
 
@@ -127,3 +145,22 @@ The position of a client on a particular piece of legislation. Reported monthly.
 | `lobbyist_id` | _bigint_ | Reference to a [`lobbyist`](#lobbyist) |
 | `created_at` | _datetime_ | |
 | `updated_at`| _datetime_ | |
+
+## Raw Data
+
+#### Links to file on the Colorado Sos's website.
+
+* [Professional lobbyists and firms directory (TXT)](https://www.coloradosos.gov/pubs/lobby/downloadFiles/prof_lobbyist_directory.txt)
+* [Client positions - subjects and bills - current fiscal year (TXT)](https://www.coloradosos.gov/pubs/lobby/downloadFiles/prof_bills_current_fiscal_year.txt)
+* [Client directory - current fiscal year (TXT)](https://www.coloradosos.gov/pubs/lobby/downloadFiles/prof_clients_current_fiscal_year.txt)
+* [Lobbying income - current fiscal year (TXT)](https://www.coloradosos.gov/pubs/lobby/downloadFiles/prof_income_current_fiscal_year.txt)
+
+
+#### Links that I don't use currently but could beuseful later
+* [Client positions - subjects and bills - 5-year history (TXT)](https://www.coloradosos.gov/pubs/lobby/downloadFiles/prof_bills_5_years.txt)
+* [Client directory - 5-year history (TXT)](https://www.coloradosos.gov/pubs/lobby/downloadFiles/prof_clients_5_years.txt)
+* [Lobbying income - 5-year history (TXT)](https://www.coloradosos.gov/pubs/lobby/downloadFiles/prof_income_5_years.txt)
+
+#### General Resources
+* [Lobbying Guidance Manual](https://www.coloradosos.gov/pubs/lobby/files/guidanceManual.pdf)
+* [Colorado Secretary of State Lobbying Homepage](https://www.coloradosos.gov/pubs/lobby/lobby_home.html)
