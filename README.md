@@ -1,7 +1,9 @@
 
-# README
+# Colorado Lobbyist Tracker
 
+This project is a website that aggregates and organizes lobbying data in Colorado.
 
+## Versioning
 * Ruby 3.2.2
 * Rails 7.0.8
 
@@ -63,9 +65,7 @@ Someone who hires a lobbyist or the organization for whom a lobbyist works. From
 | `ceo_names` | _string_ | |
 | `fiscal_year` | _string_ | |
 | `annual_lobbyist_registration_id` | _bigint_ | |
-| `lobbyist_id` | _bigint_ | Reference to a [`lobbyist`](#lobbyist) |
-| `created_at`| _datetime_ | |
-| `updated_at`| _datetime_ | |
+| `lobbyist_id` | _bigint_ | FK [`lobbyist`](#lobbyist) |
 
 ### `income`
 
@@ -84,10 +84,8 @@ A payment from a [`client`](#client) to a [`lobbyist`](#lobbyist).
 | `report_month` | _string_ | |
 | `report_due_date` | _date_ | |
 | `fiscal_year` | _string_ | |
-| `lobbyist_id` | _bigint_ | Reference to a [`lobbyist`](#lobbyist) |
-| `client_id` | _bigint_ | Reference to a [`client`](#client) |
-| `created_at` | _datetime_ | |
-| `updated_at`| _datetime_ | |
+| `lobbyist_id` | _bigint_ | FK [`lobbyist`](#lobbyist) |
+| `client_id` | _bigint_ | FK [`client`](#client) |
 
 ### `lobbyist`
 
@@ -108,9 +106,9 @@ A Registered lobbyist in the state of Colorado. Data comes from the SoS office.
 | `zip` | _string_ | |
 | `phone` | _string_ | |
 | `fiscal_years_registered` | _string_ | |
-| `lobbyist_type` | _string_ | |
-| `designation` | _string_ | |
-| `status` | _string_ | |
+| `lobbyist_type` | _string_ | Mostly ***Professional***. Some ***State*** and ***Redistricting***.|
+| `designation` | _string_ | - Individual lobbyist that is not employed by a lobbying firm<br> - Individual lobbyist employed by a lobbying firm<br>- Lobbying firm with 2 or more members<br>- Single-member lobbying firm<br>- Entities reporting contributions and expenditures only<br>- designation not available |
+| `status` | _string_ | * Current <br> * Expired<br> * Terminated|
 | `created_at` | _datetime_ | |
 | `updated_at` | _datetime_ | |
 
@@ -123,7 +121,7 @@ The position of a client on a particular piece of legislation. Reported monthly.
 | `id` | _bigint_ | |
 | `report_month` | _string_ | |
 | `fiscal_year` | _string_ | |
-| `position` | _position_ | Support, Oppose, Watching, Amending, etc.  |
+| `position` | _position_ | Support, Oppose, Watching, or Amending  |
 | `bill_id` | _bigint_ | Reference to a [`bill`](#bill) |
 | `client_id` | _bigint_ | Reference to a [`client`](#client) |
 | `lobbyist_id` | _bigint_ | Reference to a [`lobbyist`](#lobbyist) |
