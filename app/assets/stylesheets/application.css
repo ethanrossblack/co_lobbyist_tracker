@@ -13,3 +13,35 @@
  *= require_tree .
  *= require_self
  */
+th, td {
+  padding: 10px;
+}
+
+.bill_name {
+  width: 250px;
+}
+
+.client_name, .lobbyist_name {
+  width: 250px;
+}
+
+
+
+
+.Supporting {
+  background-color: green;
+}
+
+.Amending {
+  background-color: #ADD8E6;;
+}
+
+.Monitoring {
+  background-color: yellow;
+}
+
+.Opposing {
+  background-color: red;
+  color: white;
+}
+
