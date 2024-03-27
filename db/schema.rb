@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_02_11_215305) do
+ActiveRecord::Schema[7.0].define(version: 2024_03_13_042922) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -83,14 +83,15 @@ ActiveRecord::Schema[7.0].define(version: 2024_02_11_215305) do
   end
 
   create_table "positions", force: :cascade do |t|
-    t.string "report_month"
     t.string "fiscal_year"
-    t.string "position"
+    t.integer "position"
     t.bigint "bill_id", null: false
     t.bigint "lobbyist_id", null: false
     t.bigint "client_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.date "start_date"
+    t.date "end_date"
     t.index ["bill_id"], name: "index_positions_on_bill_id"
     t.index ["client_id"], name: "index_positions_on_client_id"
     t.index ["lobbyist_id"], name: "index_positions_on_lobbyist_id"
