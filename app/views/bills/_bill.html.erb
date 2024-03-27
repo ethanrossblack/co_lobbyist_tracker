@@ -1,0 +1,54 @@
+<div id="<%= dom_id bill %>">
+  <h1><%= bill.bill_num %></h1>
+  <h2><%= bill.title %></h2>
+  <ul>
+    <li>
+      <%= link_to "Official Bill Page", "https://leg.colorado.gov/bills/#{bill.bill_num.downcase}", target: "_blank" %>
+    </li>
+  </ul>
+
+  <h2>Positions</h2>
+  <table border="1">
+    <tr>
+      <td class="Supporting"><b>👍 Supporting</b></td>
+      <td><%= bill.positions.Supporting.where(end_date: nil).count %></td>
+    </tr>
+    <tr>
+      <td class="Opposing"><b>👎 Opposing</b></td>
+      <td><%= bill.positions.Opposing.where(end_date: nil).count %></td>
+    </tr>
+    <tr>
+      <td class="Amending"><b>✏️ Amending</b></td>
+      <td><%= bill.positions.Amending.where(end_date: nil).count %></td>
+    </tr>
+    <tr>
+      <td class="Monitoring"><b>🔍 Monitoring</b></td>
+      <td><%= bill.positions.Monitoring.where(end_date: nil).count %></td>
+    </tr>
+  </table>
+
+
+  <h3>Lobbyists</h3>
+  <table border="1">
+    <thead>
+      <tr>
+        <th>Lobbyist</td>
+        <th>Client</td>
+        <th>Position</td>
+        <th>Start Date</td>
+        <th>End Date</td>
+      </tr>
+    </thead>
+    <tbody>
+      <% bill.positions.joins(:client).order('positions.start_date DESC, positions.lobbyist_id, clients.name ').each do |position| %>
+        <tr>
+          <td class="lobbyist_name"><%= link_to position.lobbyist.name.titleize, lobbyist_path(position.lobbyist) %></td>
+          <td class="client_name"><%= position.client.name.titleize.gsub(/\((.*?)\)/) { |match| match.upcase } %></td>
+          <td class="<%= position.position %>"><%= position.position %></td>
+          <td><%= position.start_date.strftime("%b %d %Y") %></td>
+          <td><%= position.end_date ? position.end_date.strftime("%b %d %Y") : "Ongoing" %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
