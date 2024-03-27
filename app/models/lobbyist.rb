@@ -1,6 +1,7 @@
 class Lobbyist < ApplicationRecord
   has_many :clients, dependent: :destroy
   has_many :incomes, dependent: :destroy
+  has_many :positions
 
   def total_income
     incomes.sum(:amount)

@@ -16,10 +16,10 @@ namespace :import_data do
 
     # Open text file of lobbyists
     puts "* Reading through lobbyist seed file ..."
-    lobbyist_filepath = "db/data/prof_lobbyist_directory_2_11.txt"
+    lobbyist_filepath = "db/data/03_13_prof_lobbyist_directory.txt"
     lobbyist_seeds = File.readlines(lobbyist_filepath)
     # First line of the file is the header, which looks like this:
-    # lobbyistName	lobbystLastName	lobbyistFirstName	lobbyistMiddleName	lobbyistSuffix	lobbyistFirmName	lobbyistAddress	lobbyistCity	lobbyistState	lobbyistZip	primaryLobbyistID	lobbyistPhone	fiscalYearsRegistered	lobbystType	lobbyistDesignation	status	runDate
+    # 0.lobbyistName	1.lobbystLastName	2.lobbyistFirstName	3.lobbyistMiddleName	4.lobbyistSuffix	5.lobbyistFirmName	6.lobbyistAddress	7.lobbyistCity	8.lobbyistState	9.lobbyistZip	10.primaryLobbyistID	11.lobbyistPhone	12.fiscalYearsRegistered	13.registrationEndDate 14.lobbystType	15.lobbyistDesignation	16.status	17.runDate
     
     # Iterate through each line in the file and create a Lobbyist object
     puts "* Creating lobbyist models...", ""
@@ -45,9 +45,9 @@ namespace :import_data do
         id: row[10].to_i,
         phone: row[11],
         fiscal_years_registered: row[12],
-        lobbyist_type: row[13],
-        designation: row[14].strip,
-        status: row[15].strip
+        lobbyist_type: row[14],
+        designation: row[15].strip,
+        status: row[16].strip
       )
 
       lobbyist_count += 1
@@ -72,7 +72,7 @@ namespace :import_data do
 
     # Open text file of clients
     puts "* Reading through lobbyist seed file ..."
-    clients_filepath = "db/data/prof_clients_current_fiscal_year_2_11.txt"
+    clients_filepath = "db/data/03_13_prof_clients_current_fiscal_year.txt"
     client_seeds = File.readlines(clients_filepath)
 
     # First line of the file is the header, which looks like this:
@@ -135,7 +135,7 @@ namespace :import_data do
 
     # Open text file of incomes
     puts "* Reading through lobbyist seed file ..."
-    incomes_filepath = "db/data/prof_income_current_fiscal_year_2_11.txt"
+    incomes_filepath = "db/data/03_13_prof_income_current_fiscal_year.txt"
     income_seeds = File.readlines(incomes_filepath)
 
     # First line of the file is the header, which looks like this:
