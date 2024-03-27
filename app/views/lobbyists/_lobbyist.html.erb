@@ -54,4 +54,52 @@
   </table>
 </div>
 
-
+<% lobbyist.clients.each do |client| %>
+  <% if !client.positions.empty? %>
+    <h4><%= client.name.titleize.gsub(/\((.*?)\)/) { |match| match.upcase } %></h4>
+    <table border="1">
+      <thead>
+        <tr>
+          <th>Bill</td>
+          <th>Position</td>
+          <th>Start Date</td>
+          <th>End Date</td>
+        </tr>
+      </thead>
+      <tbody>
+        <% client.positions.order('positions.start_date DESC').each do |position| %>
+          <tr>
+            <td><%= link_to "#{position.bill.bill_num}: #{position.bill.title}", bill_path(position.bill) %></td>
+            <td class="<%= position.position %>"><%= position.position %></td>
+            <td><%= position.start_date.strftime("%b %d %Y") %></td>
+            <td><%= position.end_date ? position.end_date.strftime("%b %d %Y") : "Ongoing" %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  <% end %>
+<% end %>
+  <hr>
+  <h2>Bills</h2>
+  <table border="1">
+    <thead>
+      <tr>
+        <th>Bill</td>
+        <th>Client</td>
+        <th>Position</td>
+        <th>Start Date</td>
+        <th>End Date</td>
+      </tr>
+    </thead>
+    <tbody>
+      <% lobbyist.positions.joins(:bill).order('bills.bill_num, positions.start_date DESC').each do |position| %>
+        <tr>
+          <td class="bill_name"><%= link_to "#{position.bill.bill_num}", bill_path(position.bill) %><br><%= position.bill.title %></td>
+          <td class="client_name"><%= "#{position.client.name.titleize.gsub(/\((.*?)\)/) { |match| match.upcase }}" %></td>
+          <td class="<%= position.position %>"><%= position.position %></td>
+          <td><%= position.start_date.strftime("%b %d %Y") %></td>
+          <td><%= position.end_date ? position.end_date.strftime("%b %d %Y") : "Ongoing" %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
